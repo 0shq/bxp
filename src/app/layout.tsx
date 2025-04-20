@@ -4,6 +4,8 @@ import { Hanken_Grotesk } from 'next/font/google'
 import { Metadata } from 'next'
 import { Providers } from './providers'
 import NavBar from '@/components/NavBar'
+import { MainLayout } from '@/components/MainLayout'
+import { SolanaWalletProvider } from '@/providers/WalletProvider'
 
 const font = Hanken_Grotesk({ subsets: ['latin'] })
 
@@ -20,10 +22,14 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark text-foreground bg-background" suppressHydrationWarning>
       <body className={`${font.className}`}>
-        <Providers>
-          <NavBar />
-          {children}
-        </Providers>
+        <SolanaWalletProvider>
+          <Providers>
+            <NavBar />
+            <MainLayout>
+              {children}
+            </MainLayout>
+          </Providers>
+        </SolanaWalletProvider>
       </body>
     </html>
   )
