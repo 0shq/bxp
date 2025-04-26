@@ -1,18 +1,21 @@
 "use client";
 
-import Dashboard from "@/app/dashboard";
-import SectionTabs from "./SectionTabs";
-import AI from "@/app/ai";
+import SectionTabs from "../SectionTabs";
+import { useWalletAuth } from "@/hooks/useWalletAuth";
+import { AIContainer } from "../AI/AIContainer";
+import { AnalyticsContainer } from "../Analytics/AnalyticsContainer";
 interface MainLayoutProps {
   children?: React.ReactNode;
 }
 
 export function MainLayout({ children }: MainLayoutProps) {
+  const { walletAddress } = useWalletAuth()
+  const address = walletAddress as string
   return (
     <div className=" mx-auto px-4 py-4">
       <div className="grid grid-cols-12 gap-4 h-[calc(100vh-5rem)]">
         {/* Dashboard Column */}
-        <Dashboard />
+        <AnalyticsContainer address={address} />
 
         {/* Feed Column */}
        <SectionTabs>
@@ -20,7 +23,7 @@ export function MainLayout({ children }: MainLayoutProps) {
        </SectionTabs>
 
         {/* AI Chat Column */}
-        <AI />
+        <AIContainer />
       </div>
     </div>
   );

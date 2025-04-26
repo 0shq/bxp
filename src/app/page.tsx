@@ -1,14 +1,23 @@
-'use client';
+"use client";
+
+import { useWalletAuth } from '@/hooks/useWalletAuth'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 export default function Home() {
+  const { isConnected, walletAddress } = useWalletAuth()
+  const router = useRouter()
+
+  // If wallet is connected, redirect to wallet address page
+  useEffect(() => {
+    if (isConnected && walletAddress) {
+      router.push(`/${walletAddress}`)
+    }
+  }, [isConnected, walletAddress, router])
+
   return (
-    <main className="text-foreground px-4 py-8 min-h-screen">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8">Welcome to BXP</h1>
-        <p className="text-lg mb-6">
-          Web3-native, AI-powered proof of experience platform
-        </p>
-      </div>
-    </main>
+    <div className="p-4">
+      Welcome to BXP
+    </div>
   )
 }

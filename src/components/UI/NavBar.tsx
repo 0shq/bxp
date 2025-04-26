@@ -10,7 +10,7 @@ import { ThemeSwitcher } from "./ThemeSwitcher";
 import { BXPLogo } from "@/public/bxplogo";
 import dynamic from 'next/dynamic';
 
-const WalletButton = dynamic(() => import('./WalletButton'), {
+const WalletButton = dynamic(() => import('../WalletButton'), {
   ssr: false,
 });
 
