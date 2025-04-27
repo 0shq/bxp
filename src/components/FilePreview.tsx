@@ -1,29 +1,32 @@
 "use client";
 
 import { useState, useEffect } from 'react'
-import { File, FileImage, FileVideo, FilePdf } from '@phosphor-icons/react'
+import { File as FileIcon, FileImage, FileVideo, FilePdf } from '@phosphor-icons/react'
 
 const getFileIcon = (fileType: string) => {
   if (fileType.startsWith('image/')) return FileImage
   if (fileType.startsWith('video/')) return FileVideo
   if (fileType === 'application/pdf') return FilePdf
-  return File
+  return FileIcon
 }
 
 interface FilePreviewProps {
-  file: File
+  file: File | { name: string; type: string; size?: number }
 }
 
 export function FilePreview({ file }: FilePreviewProps) {
   const [preview, setPreview] = useState<string>('')
 
   useEffect(() => {
-    if (file.type.startsWith('image/')) {
+    // Only try to preview if file is a File instance (not plain object)
+    if (typeof window !== 'undefined' && file instanceof window.File && file.type.startsWith('image/')) {
       const reader = new FileReader()
       reader.onloadend = () => {
         setPreview(reader.result as string)
       }
       reader.readAsDataURL(file)
+    } else {
+      setPreview('')
     }
   }, [file])
 

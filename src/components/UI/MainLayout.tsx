@@ -23,7 +23,7 @@ export function MainLayout({ children }: MainLayoutProps) {
        </SectionTabs>
 
         {/* AI Chat Column */}
-        <AIContainer />
+        <AIContainer address={address} />
       </div>
     </div>
   );
